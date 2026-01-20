@@ -98,7 +98,7 @@
                         
                         // 2. Build the RAW URL for the 8K Original
                         // Note: raw.githubusercontent.com serves the image directly
-                        const originalUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${originalFolder}/${originalFileName}`;
+                        const originalUrl = `${originalFolder}/${originalFileName}`;
 
                         // 3. Create Link
                         const link = document.createElement('a');
