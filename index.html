@@ -24,7 +24,7 @@ title: Cat Meme Gallery
 
 <div class="gallery-grid">
   {% for file in site.static_files %}
-    {% if file.path contains 'your-meme-folder-name' %}
+    {% if file.path contains 'processed' %}
       <a href="{{ site.baseurl }}{{ file.path }}">
         <img src="{{ site.baseurl }}{{ file.path }}" alt="Cat Meme" loading="lazy">
       </a>
