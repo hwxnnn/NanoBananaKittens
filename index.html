@@ -1,33 +1,52 @@
----
-layout: default
-title: Cat Meme Gallery
----
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cat Meme Gallery</title>
+    <style>
+        body { font-family: sans-serif; background: #111; color: #fff; text-align: center; }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .gallery img:hover { transform: scale(1.05); cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>The Collection</h1>
+    <div class="gallery" id="gallery"></div>
 
-## The Collection
+    <script>
+        // --- EDIT THESE 3 LINES ---
+        const username = 'your-github-username';
+        const repo = 'your-repo-name';
+        const folder = 'your-folder-name'; // e.g., 'memes'
+        // --------------------------
 
-<style>
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
-  }
-  .gallery-grid img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    transition: transform 0.2s;
-  }
-  .gallery-grid img:hover {
-    transform: scale(1.05);
-  }
-</style>
+        const gallery = document.getElementById('gallery');
+        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${folder}`;
 
-<div class="gallery-grid">
-  {% for file in site.static_files %}
-    {% if file.path contains 'processed' %}
-      <a href="{{ site.baseurl }}{{ file.path }}">
-        <img src="{{ site.baseurl }}{{ file.path }}" alt="Cat Meme" loading="lazy">
-      </a>
-    {% endif %}
-  {% endfor %}
-</div>
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(file => {
+                    // Check if file is an image (jpg, png, gif, jpeg)
+                    if (file.name.match(/\.(jpg|jpeg|png|gif)$/i)) {
+                        const img = document.createElement('img');
+                        img.src = file.download_url; // Use the direct download link
+                        img.loading = "lazy";
+                        gallery.appendChild(img);
+                    }
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
