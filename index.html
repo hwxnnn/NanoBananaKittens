@@ -1,0 +1,33 @@
+---
+layout: default
+title: Cat Meme Gallery
+---
+
+## The Collection
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .gallery-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.2s;
+  }
+  .gallery-grid img:hover {
+    transform: scale(1.05);
+  }
+</style>
+
+<div class="gallery-grid">
+  {% for file in site.static_files %}
+    {% if file.path contains 'your-meme-folder-name' %}
+      <a href="{{ site.baseurl }}{{ file.path }}">
+        <img src="{{ site.baseurl }}{{ file.path }}" alt="Cat Meme" loading="lazy">
+      </a>
+    {% endif %}
+  {% endfor %}
+</div>
